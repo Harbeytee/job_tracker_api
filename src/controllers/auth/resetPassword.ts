@@ -2,12 +2,12 @@ const User = require("../../models/User");
 const Token = require("../../models/Token");
 const { BadRequestError } = require("../../utils/errors");
 import { Request, Response } from "express";
-import ResetPasswordSchema from "../../schemas/auth/reset-password";
+import resetPasswordSchema from "../../schemas/auth/resetPasswordSchema";
 import { StatusCodes } from "http-status-codes";
 
 const resetPassword = async (req: Request, res: Response) => {
   //validate request body
-  ResetPasswordSchema.parse(req.body);
+  resetPasswordSchema.parse(req.body);
 
   const { password, key } = req.body;
 

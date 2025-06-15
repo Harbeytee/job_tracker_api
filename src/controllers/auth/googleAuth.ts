@@ -6,11 +6,9 @@ import { createUser } from "../../utils/helpers/createUser";
 import config from "../../config/config";
 import getGoogleToken from "../../utils/helpers/auth/getGoogleToken";
 import getGoogleUser from "../../utils/helpers/auth/getGoogleUser";
-import GoogleAuthSchema from "../../schemas/auth/google-auth";
+import googleAuthSchema from "../../schemas/auth/googleAuthSchema";
 import { AuthProviders } from "../../types/auth/enums";
 const { BadRequestError } = require("../../utils/errors");
-
-
 
 console.log({ google: config.google, config });
 enum GoogleAction {
@@ -22,7 +20,7 @@ const googleAuth = async (req: Request, res: Response) => {
   const { code, action } = req.body;
 
   //for validating payload
-  GoogleAuthSchema.parse(req.body);
+  googleAuthSchema.parse(req.body);
 
   const { access_token } = await getGoogleToken(code);
   const user = await getGoogleUser(access_token);
@@ -64,4 +62,4 @@ const googleAuth = async (req: Request, res: Response) => {
   }
 };
 
-export = { googleAuth };
+export = googleAuth;

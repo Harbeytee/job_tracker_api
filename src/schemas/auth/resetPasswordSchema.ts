@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const ResetPasswordSchema = z
+const resetPasswordSchema = z
   .object({
     key: z.string().min(1, "Key is required"),
     password: z.string().min(1, "Password is required"),
@@ -11,4 +11,4 @@ const ResetPasswordSchema = z
     path: ["confirmPassword"],
   });
 
-export default ResetPasswordSchema;
+export default resetPasswordSchema;

@@ -1,20 +1,19 @@
-import { z } from "zod";
 import { Request, Response } from "express";
 import { AuthProviders } from "../../types/auth/enums";
 import config from "../../config/config";
 import sendEmail from "../../utils/helpers/auth/sendEmail";
 import { StatusCodes } from "http-status-codes";
+import forgotPasswordSchema from "../../schemas/auth/forgotPasswordSchema";
 const User = require("../../models/user");
 const Token = require("../../models/token");
 const { UnauthenticatedError, BadRequestError } = require("../../utils/errors");
 const crypto = require("crypto");
 
 const forgotPassword = async (req: Request, res: Response) => {
-  const schema = z.object({ email: z.string().email() });
-  schema.parse(req.body);
+  //validate payload
+  forgotPasswordSchema.parse(req.body);
 
   const user = await User.findOne({ email: req.body.email });
-  console.log(user);
 
   if (!user) {
     throw new UnauthenticatedError("user with given email doesn't exist");

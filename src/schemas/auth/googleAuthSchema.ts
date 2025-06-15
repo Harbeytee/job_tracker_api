@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const GoogleAuthSchema = z.object({
+const googleAuthSchema = z.object({
   code: z
     .string({ required_error: "Code is required" })
     .min(1, "Code code cannot be empty"),
@@ -11,4 +11,4 @@ const GoogleAuthSchema = z.object({
   }),
 });
 
-export default GoogleAuthSchema;
+export default googleAuthSchema;
