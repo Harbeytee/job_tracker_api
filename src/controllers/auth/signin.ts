@@ -2,8 +2,8 @@ const User = require("../../models/User");
 const { StatusCodes } = require("http-status-codes");
 const { UnauthenticatedError } = require("../../utils/errors");
 import SignInSchema from "../../schemas/auth/sign-in";
-
 import { Request, Response } from "express";
+import { AuthProviders } from "../../types/auth/enums";
 
 const signIn = async (req: Request, res: Response) => {
   const { email, password } = req.body;
@@ -15,9 +15,10 @@ const signIn = async (req: Request, res: Response) => {
   if (!user) {
     throw new UnauthenticatedError("Invalid Credentials");
   }
-  if (user.authProvider !== "local") {
+  //making sure they sign in with the authprovider they signed up with
+  if (user.authProvider !== AuthProviders.Local) {
     throw new UnauthenticatedError(
-      `You signed up with ${user.authProvider}, sign in with ${user.authProvider}`
+      `This account was created with ${user.authProvider}, sign in with ${user.authProvider} to continue`
     );
   } else {
     const isPasswordCorrect = await user.comparePassword(password);

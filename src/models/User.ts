@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { model, models, Schema } from "mongoose";
 import bcrypt from "bcryptjs";
 import config from "../config/config";
 import jwt, { SignOptions } from "jsonwebtoken";
@@ -72,4 +72,4 @@ UserSchema.methods.comparePassword = async function (userPassword: string) {
   return isMatch;
 };
 
-module.exports = mongoose.model("User", UserSchema);
+module.exports = models.User || model("User", UserSchema);

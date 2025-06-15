@@ -7,12 +7,10 @@ import config from "../../config/config";
 import getGoogleToken from "../../utils/helpers/auth/getGoogleToken";
 import getGoogleUser from "../../utils/helpers/auth/getGoogleUser";
 import GoogleAuthSchema from "../../schemas/auth/google-auth";
+import { AuthProviders } from "../../types/auth/enums";
 const { BadRequestError } = require("../../utils/errors");
 
-enum AuthProviders {
-  Google = "google",
-  Local = "local",
-}
+
 
 console.log({ google: config.google, config });
 enum GoogleAction {
@@ -43,7 +41,7 @@ const googleAuth = async (req: Request, res: Response) => {
       throw new UnauthenticatedError("Invalid Credentials");
     }
 
-    //if user did not log in with google, throw error
+    //if user did not sign up with google, throw error
     if (existingUser.authProvider !== AuthProviders.Google) {
       throw new BadRequestError(
         "You were not signed up with google. Please sign up with Google first or use a different sign-in method."

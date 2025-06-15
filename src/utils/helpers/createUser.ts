@@ -9,7 +9,7 @@ export const createUser = async (userObject: any) => {
     const {authProvider} = userObject
     if(authProvider && authProvider !== userData.authProvider) {
         throw new BadRequestError(
-        `You were not signed up with ${authProvider}. Please sign up with  ${authProvider} first or use a different sign-in method.`
+        `This account was not created with ${authProvider}. \nPlease sign up with  ${authProvider} first or use a different sign-in method.`
       );
     }
     throw new BadRequestError("You are signed up already, log in");

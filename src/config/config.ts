@@ -18,6 +18,13 @@ const config = {
     userInfoUrl: process.env.GOOGLE_USER_INFO_URL,
     tokenUrl: process.env.GOOGLE_AUTH_TOKEN_URL,
   },
+  email: {
+    host: process.env.EMAIL_HOST,
+    user: process.env.EMAIL_USER,
+    password: process.env.EMAIL_PASSWORD,
+    service: process.env.EMAIL_SERVICE,
+    port: Number(process.env.EMAIL_PORT) || 587,
+  },
 };
 
 export default config;
