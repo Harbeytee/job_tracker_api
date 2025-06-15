@@ -6,6 +6,7 @@ const config = {
   port: Number(process.env.PORT) || 3000,
   nodeEnv: process.env.NODE_ENV || "development",
   mongoUri: process.env.MONGO_URI,
+  baseUrl: process.env.BASE_URL,
   jwt: {
     secret: process.env.JWT_SECRET,
     lifetime: process.env.JWT_LIFETIME || "24h",

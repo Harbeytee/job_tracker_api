@@ -1,5 +1,5 @@
 const { StatusCodes } = require("http-status-codes");
-import { Request, Response, NextFunction, Errback } from "express";
+import { Request, Response, NextFunction } from "express";
 import { Error as MongooseError } from "mongoose";
 
 interface CustomError extends Error {
@@ -21,13 +21,7 @@ const errorHandlerMiddleware = (
     statusCode: err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR,
     msg: err.message || "Something went wrong try again later",
   };
-  if (err.name === "ValidationError") {
-    customError.msg = Object.values(err.errors)
-      .map((item) => item.message)
-      .join(", \n");
-    customError.statusCode = 400;
-  }
-  if (err.name === "ZodError") {
+  if (err.name === "ValidationError" || err.name === "ZodError") {
     customError.msg = Object.values(err.errors)
       .map((item) => item.message)
       .join(", \n");
