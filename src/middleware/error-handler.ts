@@ -1,27 +1,36 @@
-const { StatusCodes } = require('http-status-codes');
-import  { Request, Response, NextFunction, Errback } from 'express';
- import { Error as MongooseError } from 'mongoose';
+const { StatusCodes } = require("http-status-codes");
+import { Request, Response, NextFunction, Errback } from "express";
+import { Error as MongooseError } from "mongoose";
 
 interface CustomError extends Error {
   statusCode?: number;
-  errors: MongooseError.ValidationError['errors'];
+  errors: MongooseError.ValidationError["errors"];
   code?: number;
   keyValue: { [key: string]: any };
   value?: string;
 }
 
-const errorHandlerMiddleware = (err: CustomError, req: Request, res: Response, next: NextFunction) => {
-
+const errorHandlerMiddleware = (
+  err: CustomError,
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   let customError = {
     // set default
     statusCode: err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR,
-    msg: err.message || 'Something went wrong try again later',
-    
+    msg: err.message || "Something went wrong try again later",
   };
-  if (err.name === 'ValidationError') {
-    customError.msg = err.message || Object.values(err.errors)
+  if (err.name === "ValidationError") {
+    customError.msg = Object.values(err.errors)
       .map((item) => item.message)
-      .join(',');
+      .join(", \n");
+    customError.statusCode = 400;
+  }
+  if (err.name === "ZodError") {
+    customError.msg = Object.values(err.errors)
+      .map((item) => item.message)
+      .join(", \n");
     customError.statusCode = 400;
   }
   if (err.code && err.code === 11000) {
@@ -30,12 +39,11 @@ const errorHandlerMiddleware = (err: CustomError, req: Request, res: Response, n
     )} field, please choose another value`;
     customError.statusCode = 400;
   }
-  if (err.name === 'CastError') {
+  if (err.name === "CastError") {
     customError.msg = `No item found with id : ${err.value}`;
     customError.statusCode = 404;
   }
-    return res.status(customError.statusCode).json({ msg: customError.msg, err });
- return res.status(customError.statusCode).json({ err });
+  return res.status(customError.statusCode).json({ msg: customError.msg, err });
 };
 
 module.exports = errorHandlerMiddleware;

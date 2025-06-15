@@ -1,15 +1,17 @@
 import mongoose, { Schema } from "mongoose";
 import bcrypt from "bcryptjs";
 import config from "../config/config";
-import jwt from "jsonwebtoken";
+import jwt, { SignOptions } from "jsonwebtoken";
 
+interface IUser extends Document {
+  name: string;
+  email: string;
+  password?: string;
+  googleId?: string;
+  authProvider?: "local" | "google";
+}
 
-// import mongoose, { Document, Model, Schema } from "mongoose";
-
-// import jwt from "jsonwebtoken";
-// import config from "../config/config";
-
-const UserSchema = new Schema({
+const UserSchema = new Schema<IUser>({
   name: {
     type: String,
     required: [true, "Please provide name"],
@@ -27,20 +29,42 @@ const UserSchema = new Schema({
   },
   password: {
     type: String,
-    required: [true, "Please provide password"],
-    minlength: 6,
+    minlength: [6, "Password must be at least 6 characters long"],
+    required: [
+      function () {
+        // Password required if authProvider is not set (local user)
+        return !this.authProvider;
+      },
+      "Please provide password",
+    ],
+  },
+  googleId: {
+    type: String,
+    unique: true,
+    sparse: true,
+  },
+  authProvider: {
+    type: String,
+    enum: ["local", "google"],
+    default: "local",
   },
 });
 
 UserSchema.pre("save", async function () {
-  const salt = await bcrypt.genSalt(10);
-  this.password = await bcrypt.hash(this.password, salt);
+  if (this.password) {
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+  }
 });
 
 UserSchema.methods.createJWT = function () {
-  return jwt.sign({ userId: this._id, name: this.name, email: this.email }, config.JWT_SECRET, {
-    expiresIn:  '24h'
-  });
+  return jwt.sign(
+    { userId: this._id, name: this.name, email: this.email },
+    config.jwt.secret!,
+    {
+      expiresIn: config.jwt.lifetime,
+    } as SignOptions
+  );
 };
 
 UserSchema.methods.comparePassword = async function (userPassword: string) {

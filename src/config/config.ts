@@ -1,29 +1,22 @@
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 
 dotenv.config();
 
-
-// const config = {
-//   PORT: Number(process.env.PORT) || 3000,
-//   NODE_ENV: process.env.NODE_ENV || 'development',
-//   MONGO_URI: process.env.MONGO_URI,
-//   JWT_SECRET: process.env.JWT_SECRET,
-//   JWT_LIFETIME: process.env.JWT_LIFETIME || '24hrs'
-// };
-
-
 const config = {
-  PORT: Number(process.env.PORT) || 3000,
-  NODE_ENV: process.env.NODE_ENV || 'development',
-  MONGO_URI: process.env.MONGO_URI,
-  JWT_SECRET: (() => {
-    const secret = process.env.JWT_SECRET;
-    if (!secret) {
-      throw new Error('JWT_SECRET environment variable is required');
-    }
-    return secret;
-  })(),
-  JWT_LIFETIME: process.env.JWT_LIFETIME || '24hrs'
+  port: Number(process.env.PORT) || 3000,
+  nodeEnv: process.env.NODE_ENV || "development",
+  mongoUri: process.env.MONGO_URI,
+  jwt: {
+    secret: process.env.JWT_SECRET,
+    lifetime: process.env.JWT_LIFETIME || "24h",
+  },
+  google: {
+    clientId: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    redirectUri: process.env.GOOGLE_REDIRECT_URI,
+    userInfoUrl: process.env.GOOGLE_USER_INFO_URL,
+    tokenUrl: process.env.GOOGLE_AUTH_TOKEN_URL,
+  },
 };
 
 export default config;

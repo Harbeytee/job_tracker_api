@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Google Auth Test</title>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+  </head>
+  <body>
+    <h1>Hello, TypeScript + Node.js + Express!</h1>
+
+    <!-- Buttons to trigger Google Sign Up or Sign In -->
+    <button onclick="authenticate('sign_up')">Sign up with Google</button>
+    <button onclick="authenticate('sign_in')">Sign in with Google</button>
+
+    <script>
+      function authenticate(action) {
+        window.google.accounts.oauth2
+          .initCodeClient({
+            client_id:
+              "120593048578-clg17euc7b4717i385uubp7f4t6a8ulv.apps.googleusercontent.com", // Replace with your actual client ID
+            scope: "openid email profile",
+            ux_mode: "popup",
+            callback: (response) => handleAuthCodeResponse(response, action),
+          })
+          .requestCode();
+      }
+
+      function handleAuthCodeResponse(response, action) {
+        fetch("http://localhost:3000/api/v1/auth/google", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ code: response.code, action }),
+        })
+          .then((res) => res.json())
+          .then((data) => console.log(data))
+          .catch((err) => console.error("Error sending code to server:", err));
+      }
+    </script>
+  </body>
+</html>

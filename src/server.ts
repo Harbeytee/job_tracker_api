@@ -1,8 +1,8 @@
-import app from './app';
-import config from './config/config'
-const connectDB = require('./config/db/connect')
+import app from "./app";
+import config from "./config/config";
+const connectDB = require("./config/db/connect");
 
-const port = config.PORT
+const port = config.port;
 
 const start = async () => {
   try {
