@@ -1,8 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import config from "../config/config";
-
 const jwt = require("jsonwebtoken");
-const UnauthenticatedError = require("../utils/errors");
+const { UnauthenticatedError } = require("../utils/errors");
 
 interface AuthRequest extends Request {
   user?: {
