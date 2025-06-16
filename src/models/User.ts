@@ -1,4 +1,4 @@
-import mongoose, { model, models, Schema } from "mongoose";
+import { model, models, Schema } from "mongoose";
 import bcrypt from "bcryptjs";
 import config from "../config/config";
 import jwt, { SignOptions } from "jsonwebtoken";

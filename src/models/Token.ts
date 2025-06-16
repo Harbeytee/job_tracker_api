@@ -1,4 +1,4 @@
-import mongoose, { model, models, Schema } from "mongoose";
+import { model, models, Schema } from "mongoose";
 
 const TokenSchema = new Schema({
   userId: {
@@ -13,7 +13,7 @@ const TokenSchema = new Schema({
   createdAt: {
     type: Date,
     default: Date.now,
-    expires: 3600,
+    expires: 600,
   },
 });
 

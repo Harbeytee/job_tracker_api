@@ -12,9 +12,9 @@ interface CustomError extends Error {
 
 const errorHandlerMiddleware = (
   err: CustomError,
-  req: Request,
+  _req: Request,
   res: Response,
-  next: NextFunction
+  _next: NextFunction
 ) => {
   let customError = {
     // set default
