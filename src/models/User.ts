@@ -2,14 +2,7 @@ import { model, models, Schema } from "mongoose";
 import bcrypt from "bcryptjs";
 import config from "../config/config";
 import jwt, { SignOptions } from "jsonwebtoken";
-
-interface IUser extends Document {
-  name: string;
-  email: string;
-  password?: string;
-  googleId?: string;
-  authProvider?: "local" | "google";
-}
+import { IUser } from "../types/auth/interface";
 
 const UserSchema = new Schema<IUser>({
   name: {

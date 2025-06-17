@@ -1,5 +1,5 @@
 import config from "../../../config/config";
-const nodemailer = require("nodemailer");
+import nodemailer from "nodemailer";
 
 const sendEmail = async (email: string, subject: string, text: string) => {
   try {

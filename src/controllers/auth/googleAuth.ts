@@ -3,13 +3,11 @@ import { StatusCodes } from "http-status-codes";
 import { UnauthenticatedError, BadRequestError } from "../../utils/errors";
 import { Request, Response } from "express";
 import { createUser } from "../../utils/helpers/createUser";
-import config from "../../config/config";
 import getGoogleToken from "../../utils/helpers/auth/getGoogleToken";
 import getGoogleUser from "../../utils/helpers/auth/getGoogleUser";
 import googleAuthSchema from "../../schemas/auth/googleAuthSchema";
 import { AuthProviders } from "../../types/auth/enums";
 
-console.log({ google: config.google, config });
 enum GoogleAction {
   SignIn = "sign_in",
   SignUp = "sign_up",

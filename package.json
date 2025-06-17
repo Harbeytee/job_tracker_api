@@ -8,7 +8,7 @@
     "start": "node dist/src/server.js",
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
     "lint": "eslint src/**/*.ts",
-    "lint:fix": "eslint '**/*.{ts,tsx}' --fix"
+    "lint:fix": "eslint src/**/*.ts --fix"
   },
   "author": "Harbeytee on github",
   "license": "ISC",
@@ -31,9 +31,11 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.29.0",
+    "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",
     "@types/jsonwebtoken": "^9.0.9",
     "@types/node": "^24.0.1",
+    "@types/nodemailer": "^6.4.17",
     "dotenv": "^16.5.0",
     "eslint": "^9.29.0",
     "express": "^5.1.0",

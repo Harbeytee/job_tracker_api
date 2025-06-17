@@ -7,4 +7,4 @@ import jobRoutes from "./jobs";
 router.use("/auth", authRoutes);
 router.use("/jobs", authenticationMiddleware, jobRoutes);
 
-module.exports = router;
+export default router;
