@@ -72,4 +72,5 @@ UserSchema.methods.comparePassword = async function (userPassword: string) {
   return isMatch;
 };
 
-module.exports = models.User || model("User", UserSchema);
+const User = models.User || model("User", UserSchema);
+export default User;

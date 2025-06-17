@@ -4,10 +4,10 @@ import config from "../../config/config";
 import sendEmail from "../../utils/helpers/auth/sendEmail";
 import { StatusCodes } from "http-status-codes";
 import forgotPasswordSchema from "../../schemas/auth/forgotPasswordSchema";
-const User = require("../../models/user");
-const Token = require("../../models/token");
-const { UnauthenticatedError, BadRequestError } = require("../../utils/errors");
-const crypto = require("crypto");
+import User from "../../models/User";
+import Token from "../../models/Token";
+import { UnauthenticatedError, BadRequestError } from "../../utils/errors";
+import crypto from "crypto";
 
 const forgotPassword = async (req: Request, res: Response) => {
   //validate payload
@@ -40,4 +40,4 @@ const forgotPassword = async (req: Request, res: Response) => {
     .json({ msg: `password reset link sent to your email account` });
 };
 
-export = forgotPassword;
+export default forgotPassword;

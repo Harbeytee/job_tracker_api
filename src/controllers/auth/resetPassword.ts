@@ -1,9 +1,9 @@
-const User = require("../../models/User");
-const Token = require("../../models/Token");
-const { BadRequestError } = require("../../utils/errors");
 import { Request, Response } from "express";
 import resetPasswordSchema from "../../schemas/auth/resetPasswordSchema";
 import { StatusCodes } from "http-status-codes";
+import Token from "../../models/Token";
+import User from "../../models/User";
+import { BadRequestError } from "../../utils/errors";
 
 const resetPassword = async (req: Request, res: Response) => {
   //validate request body
@@ -35,4 +35,4 @@ const resetPassword = async (req: Request, res: Response) => {
   res.status(StatusCodes.OK).json({ msg: "password reset successfuly" });
 };
 
-export = resetPassword;
+export default resetPassword;

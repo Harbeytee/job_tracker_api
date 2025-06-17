@@ -1,13 +1,7 @@
-const updateJob = require("./updateJob");
-const deleteJob = require("./deleteJob");
-const createJob = require("./createJob");
-const getJob = require("./getJob");
-const getAllJobs = require("./getAllJobs");
+import createJob from "./createJob";
+import deleteJob from "./deleteJob";
+import getAllJobs from "./getAllJobs";
+import getJob from "./getJob";
+import updateJob from "./updateJob";
 
-export = {
-  updateJob,
-  deleteJob,
-  createJob,
-  getAllJobs,
-  getJob,
-};
+export { updateJob, deleteJob, createJob, getAllJobs, getJob };

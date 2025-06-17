@@ -1,5 +1,5 @@
-const { StatusCodes } = require("http-status-codes");
 import { Request, Response, NextFunction } from "express";
+import { StatusCodes } from "http-status-codes";
 import { Error as MongooseError } from "mongoose";
 
 interface CustomError extends Error {

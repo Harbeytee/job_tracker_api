@@ -2,4 +2,4 @@ import { Request, Response } from "express";
 
 const createJob = (req: Request, res: Response) => {};
 
-export = createJob;
+export default createJob;

@@ -1,5 +1,5 @@
-const { BadRequestError } = require("../../../utils/errors");
 import config from "../../../config/config";
+import { BadRequestError } from "../../errors";
 import { HttpHelper } from "../requests/httpHelper";
 
 export default async function getGoogleUser(access_token: string) {

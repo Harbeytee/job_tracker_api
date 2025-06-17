@@ -1,6 +1,6 @@
-const User = require("../../models/User");
-const { StatusCodes } = require("http-status-codes");
-const { UnauthenticatedError } = require("../../utils/errors");
+import User from "../../models/User";
+import { StatusCodes } from "http-status-codes";
+import { UnauthenticatedError, BadRequestError } from "../../utils/errors";
 import { Request, Response } from "express";
 import { createUser } from "../../utils/helpers/createUser";
 import config from "../../config/config";
@@ -8,7 +8,6 @@ import getGoogleToken from "../../utils/helpers/auth/getGoogleToken";
 import getGoogleUser from "../../utils/helpers/auth/getGoogleUser";
 import googleAuthSchema from "../../schemas/auth/googleAuthSchema";
 import { AuthProviders } from "../../types/auth/enums";
-const { BadRequestError } = require("../../utils/errors");
 
 console.log({ google: config.google, config });
 enum GoogleAction {
@@ -62,4 +61,4 @@ const googleAuth = async (req: Request, res: Response) => {
   }
 };
 
-export = googleAuth;
+export default googleAuth;

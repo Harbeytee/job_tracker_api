@@ -2,4 +2,4 @@ import { Request, Response } from "express";
 
 const updateJob = (req: Request, res: Response) => {};
 
-export = updateJob;
+export default updateJob;

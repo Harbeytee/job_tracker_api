@@ -59,4 +59,5 @@ const JobSchema = new Schema(
   { timestamps: true }
 );
 
-module.exports = models.Job || model("Job", JobSchema);
+const Job = models.Job || model("Job", JobSchema);
+export default Job;

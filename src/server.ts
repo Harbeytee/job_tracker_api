@@ -1,6 +1,6 @@
 import app from "./app";
 import config from "./config/config";
-const connectDB = require("./config/db/connect");
+import connectDB from "./config/db/connect";
 
 const port = config.port;
 

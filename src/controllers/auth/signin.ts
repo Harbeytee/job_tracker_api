@@ -1,9 +1,9 @@
-const User = require("../../models/User");
-const { StatusCodes } = require("http-status-codes");
-const { UnauthenticatedError } = require("../../utils/errors");
 import SignInSchema from "../../schemas/auth/sign-in";
 import { Request, Response } from "express";
 import { AuthProviders } from "../../types/auth/enums";
+import User from "../../models/User";
+import { UnauthenticatedError } from "../../utils/errors";
+import { StatusCodes } from "http-status-codes";
 
 const signIn = async (req: Request, res: Response) => {
   const { email, password } = req.body;
@@ -33,4 +33,4 @@ const signIn = async (req: Request, res: Response) => {
     .json({ user: { name: user.name, email: user.email }, token });
 };
 
-export = signIn;
+export default signIn;

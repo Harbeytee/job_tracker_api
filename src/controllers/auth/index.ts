@@ -1,13 +1,7 @@
-const signIn = require("./signin");
-const signUp = require("./signup");
-const googleAuth = require("./googleAuth");
-const forgotPassword = require("./forgotPassword");
-const resetPassword = require("./resetPassword");
+import signUp from "./signup";
+import signIn from "./signin";
+import googleAuth from "./googleAuth";
+import resetPassword from "./resetPassword";
+import forgotPassword from "./forgotPassword";
 
-export = {
-  signUp,
-  signIn,
-  googleAuth,
-  resetPassword,
-  forgotPassword,
-};
+export { signUp, signIn, googleAuth, resetPassword, forgotPassword };
