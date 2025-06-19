@@ -16,24 +16,25 @@ const paramsBuilder = async <T extends Document>(
 
   // Build query filters
   Object.entries(queryParam).forEach(([key, value]) => {
+    //usually used for searching
     if (key.startsWith("filterOr")) {
       const match = key.match(/^filterOr\[(.*?)\]$/);
-      const queryKey = match?.[1];
-      if (queryKey) {
-        queryObject[queryKey] = value;
-      }
-    }
-
-    if (key.startsWith("filter")) {
-      const match = key.match(/^filter\[(.*?)\]$/);
       const queryKey = match?.[1];
       if (queryKey) {
         queryObject[queryKey] = { $regex: value, $options: "i" };
       }
     }
-
-    if (key.startsWith("order")) {
-      const match = key.match(/^order\[(.*?)\]$/);
+    1; //for filtering returns all matches
+    if (key.startsWith("filter")) {
+      const match = key.match(/^filter\[(.*?)\]$/);
+      const queryKey = match?.[1];
+      if (queryKey) {
+        queryObject[queryKey] = value;
+      }
+    }
+    //for sorting filters
+    if (key.startsWith("sort")) {
+      const match = key.match(/^sort\[(.*?)\]$/);
       const queryKey = match?.[1];
       if (queryKey) {
         sortObject[queryKey] = value === "asc" ? 1 : -1;
