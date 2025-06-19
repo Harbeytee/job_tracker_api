@@ -28,9 +28,12 @@ const signIn = async (req: Request, res: Response) => {
   }
 
   const token = user.createJWT();
-  res
-    .status(StatusCodes.OK)
-    .json({ user: { name: user.name, email: user.email }, token });
+  res.status(StatusCodes.OK).json({
+    statusCode: StatusCodes.OK,
+    message: "User signed in successfully",
+    data: { name: user.name, email: user.email },
+    token,
+  });
 };
 
 export default signIn;
