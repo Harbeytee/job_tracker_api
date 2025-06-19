@@ -1,7 +1,7 @@
 import { Model } from "mongoose";
 
 interface QueryParam {
-  [key: string]: any;
+  [key: string]: string | number | undefined;
   page?: string | number;
   limit?: string | number;
 }
@@ -11,8 +11,9 @@ const paramsBuilder = async <T extends Document>(
   queryParam: QueryParam,
   queryObj: Record<string, any>
 ) => {
-  const queryObject = queryObj;
-  let sortObject: Record<string, 1 | -1> = {};
+  const queryObject: Record<string, any> = { ...queryObj };
+  const sortObject: Record<string, 1 | -1> = {};
+  const orConditions: Record<string, any>[] = [];
 
   // Build query filters
   Object.entries(queryParam).forEach(([key, value]) => {
@@ -21,10 +22,12 @@ const paramsBuilder = async <T extends Document>(
       const match = key.match(/^filterOr\[(.*?)\]$/);
       const queryKey = match?.[1];
       if (queryKey) {
-        queryObject[queryKey] = { $regex: value, $options: "i" };
+        orConditions.push({
+          [queryKey]: { $regex: value, $options: "i" },
+        });
       }
     }
-    1; //for filtering returns all matches
+    //for filtering returns all matches
     if (key.startsWith("filter")) {
       const match = key.match(/^filter\[(.*?)\]$/);
       const queryKey = match?.[1];
@@ -42,12 +45,16 @@ const paramsBuilder = async <T extends Document>(
     }
   });
 
+  if (orConditions.length > 0) {
+    queryObject["$or"] = orConditions;
+  }
+
   const page = Number(queryParam.page) || 1;
   const limit = Number(queryParam.limit) || 10;
   const skip = (page - 1) * limit;
 
   // Final query chain
-  let resultQuery = model
+  const resultQuery = model
     .find(queryObject)
     .sort(sortObject)
     .skip(skip)
@@ -60,7 +67,15 @@ const paramsBuilder = async <T extends Document>(
   const total = await model.countDocuments(queryObject);
   const totalPages = Math.ceil(total / limit);
 
-  return { data, meta: { total, totalPages, page, limit } };
+  return {
+    data,
+    meta: {
+      total,
+      totalPages,
+      page,
+      limit,
+    },
+  };
 };
 
 export default paramsBuilder;
