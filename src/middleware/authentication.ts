@@ -1,13 +1,8 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Response } from "express";
 import config from "../config/config";
 import { UnauthenticatedError } from "../utils/errors";
 import jwt, { JwtPayload } from "jsonwebtoken";
-
-interface AuthRequest extends Request {
-  user?: {
-    userId: string;
-  };
-}
+import { AuthRequest } from "../types/auth/interface";
 
 const authenticationMiddleware = async (
   req: AuthRequest,

@@ -1,5 +1,12 @@
-import { Request, Response } from "express";
+import { Response } from "express";
+import { AuthRequest } from "../../types/auth/interface";
+import Job from "../../models/Job";
+import { StatusCodes } from "http-status-codes";
 
-const createJob = (req: Request, res: Response) => {};
+const createJob = async (req: AuthRequest, res: Response) => {
+  req.body.createdBy = req.user?.userId;
+  const job = await Job.create(req.body);
+  res.status(StatusCodes.CREATED).json({ job });
+};
 
 export default createJob;

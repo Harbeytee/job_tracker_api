@@ -7,15 +7,15 @@ const JobSchema = new Schema(
       ref: "User",
       required: [true, "Please provide user"],
     },
-    company: {
+    role: {
       type: String,
-      required: [true, "Please provide company name"],
+      required: [true, "role is required"],
       maxlength: 100,
       trim: true,
     },
-    position: {
+    company: {
       type: String,
-      required: [true, "Please provide position"],
+      required: [true, "company is required"],
       maxlength: 100,
       trim: true,
     },
