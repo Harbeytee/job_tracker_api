@@ -1,7 +1,7 @@
 import { Model } from "mongoose";
 
 interface QueryParam {
-  [key: string]: string | number | undefined;
+  [key: string]: any;
   page?: string | number;
   limit?: string | number;
 }
