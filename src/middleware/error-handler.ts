@@ -10,6 +10,7 @@ interface CustomError extends Error {
   value?: string;
 }
 
+/* eslint-disable @typescript-eslint/no-unused-vars */
 const errorHandlerMiddleware: ErrorRequestHandler = (
   err: CustomError,
   _req: Request,
@@ -17,7 +18,6 @@ const errorHandlerMiddleware: ErrorRequestHandler = (
   _next: NextFunction
 ) => {
   const customError = {
-    // set default
     statusCode: err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR,
     msg: err.message || "Something went wrong try again later",
   };
