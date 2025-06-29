@@ -3,11 +3,11 @@ import { BadRequestError } from "../../utils/errors";
 import getCoverLetterFromCv from "../../utils/coverLetterGenerator/getCoverLetterFromCv";
 import { StatusCodes } from "http-status-codes";
 import convertCovertLetterToDoc from "../../utils/coverLetterGenerator/convertCoverLetterToDoc";
-import { coverLetterBodySchema } from "../../schemas/coverLetterSchema";
+import { CoverLetterBodySchema } from "../../schemas/coverLetterSchema";
 
 const generateCoverLetter = async (req: Request, res: Response) => {
   //for validating payload
-  coverLetterBodySchema.parse(req.body);
+  CoverLetterBodySchema.parse(req.body);
 
   const letter = await getCoverLetterFromCv({ ...req.body });
 

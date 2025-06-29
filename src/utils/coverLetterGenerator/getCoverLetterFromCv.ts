@@ -1,11 +1,10 @@
-import OpenAI from "openai";
 import path from "path";
 import config from "../../config/config";
 import fetchFileBuffer from "./fetchFileBuffer";
 import PdfParse from "pdf-parse";
 import mammoth from "mammoth";
-import { BadRequestError } from "../errors";
 import getPrompt from "./getPrompt";
+import { GoogleGenAI } from "@google/genai";
 
 export default async function getCoverLetterFromCv(obj: {
   cvUrl: string;
@@ -13,9 +12,6 @@ export default async function getCoverLetterFromCv(obj: {
   company: string;
 }) {
   const { cvUrl, jobTitle, company } = obj;
-  const openai = new OpenAI({
-    apiKey: config.openAi.apiKey,
-  });
 
   const fileBuffer = await fetchFileBuffer(cvUrl);
   const fileExt = path.extname(cvUrl).toLowerCase();
@@ -28,10 +24,6 @@ export default async function getCoverLetterFromCv(obj: {
   } else if (fileExt === ".docx") {
     const result = await mammoth.extractRawText({ buffer: fileBuffer });
     cvText = result.value;
-  } else {
-    throw new BadRequestError(
-      "Unsupported file type. Only PDF and DOCX are allowed."
-    );
   }
 
   const prompt = getPrompt({
@@ -40,11 +32,14 @@ export default async function getCoverLetterFromCv(obj: {
     company,
   });
 
-  const response = await openai.chat.completions.create({
-    model: "gpt-4o-mini",
-    messages: [{ role: "user", content: prompt }],
+  const ai = new GoogleGenAI({ apiKey: config.google.geminiApiKey });
+
+  const response = await ai.models.generateContent({
+    model: "gemini-2.5-flash", //"gemini-pro"
+    contents: prompt,
   });
 
-  const letter = response?.choices?.[0].message?.content?.trim();
+  const letter = response?.text?.trim();
+
   return letter;
 }

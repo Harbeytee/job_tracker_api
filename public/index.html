@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>Google Auth Test</title>
-     <script src="/env.js"></script>
+    <script src="/env.js"></script>
     <script src="https://accounts.google.com/gsi/client" async defer></script>
   </head>
   <body>
@@ -11,21 +11,26 @@
     <!-- Buttons to trigger Google Sign Up or Sign In -->
     <button onclick="authenticate('sign_up')">Sign up with Google</button>
     <button onclick="authenticate('sign_in')">Sign in with Google</button>
+    <a
+      href="https://res.cloudinary.com/dczc9zaeu/raw/upload/v1751232522/cover_letters/cover_letter_545c7b40-1534-4dda-b3e7-07719d2657a9.docx"
+      download="My_Cover_Letter.docx"
+      >download cover letter</a
+    >
 
     <script>
-    const config = window.__ENV__
-      const client_id = config?.google?.clientId ;
-      const baseUrl = config?.baseUrl
+      const config = window.__ENV__;
+      const client_id = config?.google?.clientId;
+      const baseUrl = config?.baseUrl;
 
       function authenticate(action) {
-            if (!config) {
+        if (!config) {
           console.error("Config not loaded yet.");
           return;
         }
         window.google.accounts.oauth2
           .initCodeClient({
             client_id,
-             scope: "openid email profile",
+            scope: "openid email profile",
             ux_mode: "popup",
             callback: (response) => handleAuthCodeResponse(response, action),
           })

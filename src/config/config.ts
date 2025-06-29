@@ -17,6 +17,7 @@ const config = {
     redirectUri: process.env.GOOGLE_REDIRECT_URI,
     userInfoUrl: process.env.GOOGLE_USER_INFO_URL,
     tokenUrl: process.env.GOOGLE_AUTH_TOKEN_URL,
+    geminiApiKey: process.env.GOOGLE_GEMINI_API_KEY,
   },
   email: {
     host: process.env.EMAIL_HOST,
@@ -29,9 +30,6 @@ const config = {
     cloudName: process.env.CLOUDINARY_CLOUD_NAME,
     apiKey: process.env.CLOUDINARY_API_KEY,
     apiSecret: process.env.CLOUDINARY_API_SECRET,
-  },
-  openAi: {
-    apiKey: process.env.OPENAI_API_KEY,
   },
 };
 

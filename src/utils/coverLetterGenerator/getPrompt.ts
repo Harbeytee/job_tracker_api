@@ -21,6 +21,7 @@ export default function getPrompt({
         - Use a professional tone
         - Tailor it specifically to the job title and company
         - Include 1-2 key achievements from the CV that relate to the role
+        - Make sure to start and end with greetings like an actual letter
     
         Generate only the body of the cover letter (no formatting).
         `;

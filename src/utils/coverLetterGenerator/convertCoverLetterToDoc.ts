@@ -4,6 +4,7 @@ import { Document, Packer, Paragraph } from "docx";
 import cloudinary from "../../config/cloudinary";
 import { BadRequestError } from "../errors";
 import { Readable } from "stream";
+import agenda from "../../config/agenda";
 
 export default async function convertCoverLetterToDoc(letter: string) {
   const uniqueId = randomUUID();
@@ -25,7 +26,7 @@ export default async function convertCoverLetterToDoc(letter: string) {
         {
           resource_type: "raw",
           folder: "cover_letters",
-          public_id: `cover_letter_${uniqueId}`,
+          public_id: `cover_letter_${uniqueId}.docx`,
           type: "upload",
         },
         (error, result) => {
@@ -42,5 +43,11 @@ export default async function convertCoverLetterToDoc(letter: string) {
       Readable.from(buffer).pipe(uploadStream);
     }
   );
-  return uploadResult.secure_url;
+
+  const { public_id, secure_url } = uploadResult;
+
+  // Schedule deletion 24 hours later
+  await agenda.schedule("in 24 hours", "delete cloudinary file", { public_id });
+
+  return secure_url;
 }
