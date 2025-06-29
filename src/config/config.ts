@@ -25,6 +25,14 @@ const config = {
     service: process.env.EMAIL_SERVICE,
     port: Number(process.env.EMAIL_PORT) || 587,
   },
+  cloudinary: {
+    cloudName: process.env.CLOUDINARY_CLOUD_NAME,
+    apiKey: process.env.CLOUDINARY_API_KEY,
+    apiSecret: process.env.CLOUDINARY_API_SECRET,
+  },
+  openAi: {
+    apiKey: process.env.OPENAI_API_KEY,
+  },
 };
 
 export default config;
